@@ -1,0 +1,44 @@
+.findSkills{
+
+}
+.skills{
+ 
+    
+
+}
+.model{
+    width: 30%;
+    
+    
+}
+.modal-content {
+    position: relative;
+ 
+    background-color: white;
+    width: 60%; /* Width in proportion to its parent container*/
+    max-width: 640px; /* Max width where it stops expanding */
+    height: 30%; /* Height in proportion to its parent container */
+    margin: 10px; /* Auto margin according to the element width */
+    padding: 2px;
+    border: 1px solid rgb(7, 7, 7);
+    border-radius: 10px; /* Optional. Rounds container corners */
+  }
+  /* Close button */
+  .close {
+    color: #fff;
+    background-color: #999;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 15px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+  }
