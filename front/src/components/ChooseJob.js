@@ -5,6 +5,11 @@ import './ChooseJob.css'
 const ChooseJob = (props)=>{
   const [job,setJob] = useState("java");
   const [jobArray,setJobArray] = useState([]);
+  const[jobInput,setJobInput] = useState({
+    input:"",
+    inputValid:false,
+    lable:props.lable,
+  });
     const top100Films = [
         { label: 'The Shawshank Redemption', year: 1994 },
         { label: 'The Godfather', year: 1972 },
@@ -15,22 +20,32 @@ const ChooseJob = (props)=>{
       const data = await res.json()
       setJobArray(data.jobs);
     }
-    const handleInput = (e)=>{
+    const handleChange = (e)=>{
       const input = e.target.value;
       setJob(input)
+    }
+    const handleInput = (event,value)=>{
+      console.log("in job",value);
+      setJobInput(()=>{
+        return{input:value,inputValid:true}
+      })
     }
     console.log("JobArray",jobArray);
     useEffect(()=>{
       getJobs();
     },[job])
+    useEffect(()=>{
+      props.handleInput(jobInput,props.lable);
+    },[jobInput.input])
     return(
         <div className="job">
         <Autocomplete
+        onChange={handleInput}
       disablePortal
       id="combo-box-demo"
       options={jobArray}
       sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Choose Job" onChange = {handleInput} />}
+      renderInput={(params) => <TextField {...params} label="Choose Job" onChange = {handleChange} />}
     />
     </div>
   );

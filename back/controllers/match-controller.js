@@ -37,6 +37,7 @@ const getJobs = async(req,res,next)=>{
 const addCandidate = async(req,res,next)=>{
     const {email,name,lastName,skills,job} = req.body;
     //check if email unique
+    console.log("email",req.body);
     userFromDb = await Candidate.findOne({email:email})
     if(userFromDb){
         //email in the system
@@ -49,7 +50,7 @@ const addCandidate = async(req,res,next)=>{
         name:name,
         lastName:lastName,
         skills:skills,
-        job:job
+        title:job
     })
     await candidate.save()
     res.send({status:"ok"})

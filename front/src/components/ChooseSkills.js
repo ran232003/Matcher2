@@ -7,9 +7,9 @@ const ChooseSkills = (props)=>{
     const[skill,setSkill] = useState("software");
     const[skillsApi,setSkillsApi] = useState([]);
     const[skillsObject,setSkillsObject] = useState({
-      skillsArray:[],
-      skillsValid:false,
-      lable:props.label
+      input:[],
+        inputValid:false,
+        lable:props.lable
     });
     const top100Films = [
         { label: 'The Shawshank Redemption', year: 1994 },
@@ -17,15 +17,15 @@ const ChooseSkills = (props)=>{
         { label: 'The Godfather: Part II', year: 1974 },
     ]
     const handleInput = (event,value)=>{
-       
+       console.log("value",value);
         //getting array of values
         if(value.length>=1){
           setSkillsObject(()=>{
-            return {skillsArray:value,skillsValid:true}
+            return {input:value,inputValid:true}
           })
         }else{
           setSkillsObject(()=>{
-            return {skillsArray:value,skillsValid:false}
+            return {input:value,inputValid:false}
           })
         }
         
@@ -41,13 +41,13 @@ const ChooseSkills = (props)=>{
         setSkillsApi(data.skills);
     }
     useEffect(()=>{
-        console.log("in effect");
         getSkills()
     },[skill])
     useEffect(()=>{
-      props.handleInput(skillsObject)
-    },[skillsObject.skillsArray])
-    
+      props.handleInput(skillsObject,props.lable)
+    },[skillsObject.input])
+    console.log("lable",props.lable);
+
     return(
         <div className="job">
         <Autocomplete

@@ -19,9 +19,24 @@ const AddWorker = (props)=>{
     })
     const handleSubmit = async(event)=>{
         event.preventDefault();
+        const response = await fetch("http://localhost:5000/api/match/addCandidate",{
+            method:"POST",
+            headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            name:inputs.name, 
+            lastName:inputs.lastName,
+            email:inputs.email,
+            job:inputs.job,
+            skills:inputs.skills
+        })
+        })
+        const data = await response.json();
+        console.log(data);
+
+
     }
-    const handleInput = (inputObject)=>{
-        console.log("inputObject",inputObject)
+    const handleInput = (inputObject,lable)=>{
+        console.log("inputObject",inputObject,lable)
         if(inputObject.lable === "Name"){
             setInputs(()=>{
                 return{...inputs,name:inputObject.input,nameValid:inputObject.inputValid}
@@ -37,7 +52,19 @@ const AddWorker = (props)=>{
                 return{...inputs,email:inputObject.input,emailValid:inputObject.inputValid}
             })
         }
+        else if(lable === "Skills"){
+            console.log("in skills",inputObject.input)
+            setInputs(()=>{
+                return{...inputs,skills:inputObject.input,skillsValid:inputObject.inputValid}
+            })
+        }
+        else if(lable === "Job"){
+            setInputs(()=>{
+                return{...inputs,job:inputObject.input,jobValid:inputObject.inputValid}
+            })
+        }
     }
+    console.log("in add worker",inputs);
     return(
         <div>
             <form className = 'movie-form'>
