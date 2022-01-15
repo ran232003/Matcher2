@@ -1,0 +1,13 @@
+.AppClass{
+  display: flex;
+  width: 100%;
+  
+}
+.search{
+  width: 50%;
+}
+.results{
+  float: right;
+ 
+    width: 50%;
+}
