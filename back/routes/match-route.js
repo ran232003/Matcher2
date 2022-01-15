@@ -2,7 +2,7 @@ const { getCandidates, getJobs, getSkills, req2,getJobsTitle, addCandidate } = r
 
 express = require('express');
 const router = express.Router();
-
+//cehcking
 router.post("/candidates",getCandidates);
 router.get("/jobs",getJobs);
 router.get("/skills",getSkills);
