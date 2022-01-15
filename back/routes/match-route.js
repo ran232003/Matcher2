@@ -8,6 +8,6 @@ router.get("/jobs",getJobs);
 router.get("/skills",getSkills);
 router.get("/skills2/:skill",req2);
 router.get("/jobTitles/:job",getJobsTitle);
-router.post("/addCandidates",addCandidate);
+router.post("/addCandidate",addCandidate);
 
 module.exports = router
