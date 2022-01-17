@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 jobSchema = mongoose.Schema({
     title:String,
     
-    skils:[{
+    skills:[{
         type:String,
        
     }]  

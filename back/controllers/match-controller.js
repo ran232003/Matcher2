@@ -52,6 +52,24 @@ const addCandidate = async(req,res,next)=>{
         skills:skills,
         title:job
     })
+    let jobfromDb = await Job.findOne({title:job})
+    console.log(jobfromDb);
+    if(jobfromDb){
+        console.log("in if");
+        skills.forEach(async(skill)=>{
+           await jobfromDb.push(skill);
+        })
+        await jobfromDb.save();
+    }
+    else{
+        console.log("in else");
+        let newJob = new Job({
+            title:job,
+            skills:skills
+        })
+        await newJob.save();
+
+    }
     await candidate.save()
     res.send({status:"ok"})
 }
