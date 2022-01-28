@@ -37,7 +37,6 @@ const getJobs = async(req,res,next)=>{
 const addCandidate = async(req,res,next)=>{
     const {email,name,lastName,skills,job} = req.body;
     //check if email unique
-    console.log("email",req.body);
     userFromDb = await Candidate.findOne({email:email})
     if(userFromDb){
         //email in the system
@@ -53,16 +52,37 @@ const addCandidate = async(req,res,next)=>{
         title:job
     })
     let jobfromDb = await Job.findOne({title:job})
-    console.log(jobfromDb);
+    let skillsArray = await Skill.find();
+    let tempArray = [...skillsArray];
+    console.log("tempArray ", tempArray);
+    let newSkillArray = [];
+    skills.forEach(async(element)=>{
+        let count = 0;
+        for(let i = 0;i<tempArray.length;i++){
+            console.log(element,tempArray[i].name)
+            if(tempArray[i].name!=element){
+                count++
+            }
+        }
+        console.log(count,tempArray.length)
+        if(count == tempArray.length){
+            newSkillArray.push(element)
+            newSkill = new Skill({
+                name:element
+            })
+            await newSkill.save()
+            skillsArray.push(newSkill)
+        }
+    })
+    
     if(jobfromDb){
-        console.log("in if");
         skills.forEach(async(skill)=>{
-           await jobfromDb.push(skill);
+           await jobfromDb.skills.push(skill);
+           
         })
         await jobfromDb.save();
     }
     else{
-        console.log("in else");
         let newJob = new Job({
             title:job,
             skills:skills
@@ -71,13 +91,15 @@ const addCandidate = async(req,res,next)=>{
 
     }
     await candidate.save()
-    res.send({status:"ok"})
+    console.log("end of func",skillsArray)
+    //await skillsArray.save();
+    res.send({status:skillsArray})
 }
 
 const getSkills = async(req,res,next)=>{
     const skills = await Skill.find({});
     
-    res.json({skills:skills});
+    res.json({skills:newSkillArray});
 }
 
     
@@ -85,7 +107,6 @@ const req2 = async(req,res,next)=>{
     console.log("url param",req.params.skill);
     let skillFromFront = req.params.skill;
     if(skillFromFront == undefined){
-        console.log("inside if")
         skillFromFront = "java";
     }
     const options = {
@@ -136,9 +157,7 @@ const req2 = async(req,res,next)=>{
     };
 
 const getJobsTitle = async(req,res,next)=>{
-    console.log("url param",req.params.job);
     let jobFromFront = req.params.job;
-    console.log("jobFromFront",jobFromFront)
     if(typeof jobFromFront === 'undefined'){
         jobFromFront = "software"
         console.log("jobFromFront",jobFromFront)

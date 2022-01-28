@@ -14,11 +14,14 @@ mongoose.connect
 
 app.use("/api/match",matchRouter);
 
-app.use((req,res,next,err)=>{
-    const code = err.code||500;
-    const message = err.message||"somthing went wrong";
-    res.status(code);
-    res.json({message:message});
+app.use(function(error,req,res,next){
+    //console.log(error);
+    console.log("error controller",error.message);
+    const  errorCode = error.code || 500
+    const errorMsg = error.message || "unknown error occurd";
+    res.status(errorCode)
+    res.json({msg:errorMsg});
+
 })
 
 const getSkills2 = async()=>{
