@@ -9,6 +9,7 @@ const FindJob = (props)=>{
         props.handleJob(jobSelect);
 
     }
+    //by
     const closeJob = (job)=>{
         setChooseJob()
         props.handleJob();
